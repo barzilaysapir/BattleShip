@@ -27,9 +27,7 @@ export class NewGameFormComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  public onValueChange(val: number): void {
-    console.log(val);
-
+  public onValueChange(): void {
     this.tooManyShips = (this.gameLevelFormGroup.value.rows || this.defaultValues.rows)
       * (this.gameLevelFormGroup.value.columns || this.defaultValues.columns)
       / 2 < (this.gameLevelFormGroup.value.amountOfShips || this.defaultValues.amountOfShips);

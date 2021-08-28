@@ -4,23 +4,16 @@
     </p>
 
     <label for="ships" class="new-game-form-label"> Ships </label>
-    <input class="new-game-form-input" [ngClass]="{'error' : tooManyShips}"
-        (change)="onValueChange(gameLevelFormGroup.value.amountOfShips)" type="number"
+    <input class="new-game-form-input" [ngClass]="{'error' : tooManyShips}" (change)="onValueChange()" type="number"
         [placeholder]="'default: ' + defaultValues.amountOfShips" formControlName="amountOfShips" appOnlyDigits />
 
     <label for="rows" class="new-game-form-label"> Rows </label>
-    <input class="new-game-form-input" (change)="onValueChange(gameLevelFormGroup.value.rows)" type="number"
+    <input class="new-game-form-input" (change)="onValueChange()" type="number"
         [placeholder]="'default: ' + defaultValues.rows" formControlName="rows" appOnlyDigits />
 
     <label for="columns" class="new-game-form-label"> Colums </label>
-    <input class="new-game-form-input" (change)="onValueChange(gameLevelFormGroup.value.columns)" type="number"
-        [placeholder]="'default: ' + defaultValues.columns" formControlName="columns" id="columns" appOnlyDigits />
-
-    <div class="new-game-form-hint">
-        <!-- <p *ngIf="gameLevelFormGroup.controls['columns'].errors">Too many ships for this board size. Clicking "new game"
-            will give you the default board values.</p> -->
-        <!-- [ngClass]="{'error' : gameLevelFormGroup.controls['columns'].errors}" -->
-    </div>
+    <input class="new-game-form-input" (change)="onValueChange()" type="number"
+        [placeholder]="'default: ' + defaultValues.columns" formControlName="columns" appOnlyDigits />
 
     <button type="submit" class="new-game-form-btn">
         New Game

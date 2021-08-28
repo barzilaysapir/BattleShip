@@ -23,6 +23,9 @@ export class GameBoardComponent implements OnInit {
   public boardSquaresArr: ISquareItem[];
   public shipsAmountsList: IShipsAmountsList[];
   public EGameState: typeof EGameState;
+  //will decide on width/padding-bottom (instead of height because our TD doesn't care about height.)
+  public squareWidthInPercent : number;
+
 
   @Output() gameStateChanged: EventEmitter<EGameState> = new EventEmitter<EGameState>();
   @Output() shipsAmountListChanged: EventEmitter<IShipsAmountsList[]> = new EventEmitter<IShipsAmountsList[]>();
@@ -55,6 +58,7 @@ export class GameBoardComponent implements OnInit {
     this.largestShipImg = 7;
     this.boardSquaresArr = [];
     this.shipsAmountsList = [];
+    this.squareWidthInPercent = 0; //init because ts is forcing me to.
 
     this._gameState = EGameState.PLAYING;
     this._gameData = {} as IGameLevelData;
@@ -69,6 +73,7 @@ export class GameBoardComponent implements OnInit {
   }
 
   private setGameLevel(): void {
+    this.squareWidthInPercent = 100/this.data.columns; //we don't care about rows because squares.
     this.data.amountOfSquares = this.data.rows * this.data.columns;
     this.data.isWideBoard = this.data.columns >= 20;
     this.rows = new Array(this.data.rows);
@@ -187,7 +192,7 @@ export class GameBoardComponent implements OnInit {
     }
 
     if (this.strikesCounter === this.data.amountOfShips) {
-      this.gameStateChanged.emit(EGameState.WON);      
+      this.gameStateChanged.emit(EGameState.WON);
     }
   }
 

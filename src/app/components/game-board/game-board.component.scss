@@ -23,7 +23,7 @@
 
 .game-board {
     transform: translateX(-10px);
-    max-width: 800px;
+    max-width: 1600px; //going big here
     margin: auto;
 
     &-axes {
@@ -36,23 +36,45 @@
     }
 
     &-table {
-        &.wide {
-            border-collapse: collapse;
-        }
-        &.won {
-            filter: blur(4px);
-        }
+      width:600px;
+      &.large {
+        width:1200px;
+      }
+      &.wide {
+         border-collapse: collapse;
+      }
+      &.won {
+          filter: blur(4px);
+      }
     }
 
     &-row-square {
         position: relative;
-        &.large {
-            height: 33px;
-            width: 33px;
-        }
-        &:not(.large) {
-            height: 44px;
-            width: 44px;
-        }
+        height:0; //bottom padding is calculated based on width so it's a great candidate here as we have no actual content in our cell.
+        // width: 44px;
+        //removed .large as computation moved to table now
     }
+}
+
+
+@media only screen and (max-width: 1000px) {
+  .game-board {
+    &-table {
+      width:700px;
+      &.large {
+        width:900px;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .game-board {
+    &-table {
+      width:400px;
+      &.large {
+        width:400px;
+      }
+    }
+  }
 }

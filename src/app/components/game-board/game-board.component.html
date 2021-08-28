@@ -4,8 +4,15 @@
     <img id="state-msg-img" *ngIf="gameState === EGameState.WON" src="./assets/trophy.svg" alt="winner image">
   </div>
 
-  <table class="game-board-table"
-    [ngClass]="{'wide': data.isWideBoard, 'won': gameState === EGameState.WON, 'lost': gameState === EGameState.LOST}">
+  <table
+    class="game-board-table"
+    [ngClass]="{
+      'wide': data.isWideBoard,
+      'won': gameState === EGameState.WON,
+      'lost': gameState === EGameState.LOST,
+      'large': data.isWideBoard
+    }"
+  >
     <thead>
       <tr>
         <td></td>
@@ -18,8 +25,14 @@
         <th class="game-board-axes">{{axesLabels.y[rowI]}}</th>
 
         <ng-container *ngFor="let square of boardSquaresArr; index as squareI">
-          <td *ngIf="squareI | matrixPipe : rowI : data.columns" class="game-board-row-square"
-            [ngClass]="{'large': data.isWideBoard}">
+          <td
+            *ngIf="squareI | matrixPipe : rowI : data.columns"
+            class="game-board-row-square"
+            [style]="{
+              width:''+squareWidthInPercent+'%',
+              paddingBottom: ''+squareWidthInPercent+'%'
+            }"
+            >
             <app-game-board-square [square]="square" [gameState]="gameState"
               (squareClickedEmit)="squareClicked(squareI, $event)">
             </app-game-board-square>

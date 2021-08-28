@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 
 import { EGameLevel, EGameState } from 'src/app/services/battleship.enum';
 
-import { IGameLevelData } from './home.interface';
+import { IFormInput, IGameLevelData } from './home.interface';
 import { IShipsAmountsList } from 'src/app/components/game-board/game-board.interface';
 
 @Component({
@@ -18,6 +18,7 @@ export class HomeComponent implements OnInit {
   public gameData: IGameLevelData;
 
   public gameLevels: IGameLevelData;
+  public formInputs: IFormInput[];
   public gameLevelFormGroup: FormGroup;
 
   constructor() {
@@ -32,6 +33,22 @@ export class HomeComponent implements OnInit {
       columns: 10,
       amountOfSquares: 100,
     }
+
+    this.formInputs = [
+      {
+        label: "Ships", 
+        formControlName: "amountOfShips",
+        isValidator: true
+      },
+      {
+        label: "Rows", 
+        formControlName: "rows"
+      },
+      {
+        label: "Columns", 
+        formControlName: "columns"
+      },
+    ]
 
     this.gameLevelFormGroup = new FormGroup({
       amountOfShips: new FormControl(),

@@ -1,4 +1,4 @@
-import { EGameLevel } from "src/app/services/battleship.enum";
+import { EBoardWidth, EGameLevel } from "src/app/services/battleship.enum";
 
 interface IObjectKeys {
     [key: string]: any;
@@ -10,5 +10,12 @@ export interface IGameLevelData extends IObjectKeys {
     rows: number,
     columns: number,
     amountOfSquares: number,
-    isWide?: boolean,
+    boardWidth?: EBoardWidth,
+    squareWidthInPercent?: number,
+}
+
+export interface IFormInput {
+    label: string,
+    formControlName: string,
+    isValidator?: boolean
 }

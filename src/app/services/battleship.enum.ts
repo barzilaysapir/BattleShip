@@ -1,7 +1,7 @@
 export enum EGameState {
-    WON = 1,
-    PLAYING = 0,
-    LOST = -1,
+    WON = 'won',
+    PLAYING = 'play',
+    LOST = 'lost',
 } 
 
 export enum EGameLevel {
@@ -9,4 +9,10 @@ export enum EGameLevel {
     EASY = 1,
     MEDIUM = 2,
     HARD = 3,
+}
+
+export enum EBoardWidth {
+    THIN = 'thin',
+    NORMAL = 'normal',
+    WIDE = 'wide',
 }

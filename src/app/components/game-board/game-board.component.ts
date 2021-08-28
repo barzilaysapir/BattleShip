@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
-import { EGameState } from 'src/app/services/battleship.enum';
+import { EBoardWidth, EGameState } from 'src/app/services/battleship.enum';
 
 import { IGameLevelData } from 'src/app/layout/home/home.interface';
 import { IAxes, INewShipDetails, IShipsAmountsList, IShipsSizesRange, ISquareItem } from './game-board.interface';
@@ -23,9 +23,7 @@ export class GameBoardComponent implements OnInit {
   public boardSquaresArr: ISquareItem[];
   public shipsAmountsList: IShipsAmountsList[];
   public EGameState: typeof EGameState;
-  //will decide on width/padding-bottom (instead of height because our TD doesn't care about height.)
-  public squareWidthInPercent : number;
-
+  public EBoardWidth: typeof EBoardWidth;
 
   @Output() gameStateChanged: EventEmitter<EGameState> = new EventEmitter<EGameState>();
   @Output() shipsAmountListChanged: EventEmitter<IShipsAmountsList[]> = new EventEmitter<IShipsAmountsList[]>();
@@ -58,13 +56,14 @@ export class GameBoardComponent implements OnInit {
     this.largestShipImg = 7;
     this.boardSquaresArr = [];
     this.shipsAmountsList = [];
-    this.squareWidthInPercent = 0; //init because ts is forcing me to.
 
-    this._gameState = EGameState.PLAYING;
     this._gameData = {} as IGameLevelData;
     this.data = {} as IGameLevelData;
     this.axesLabels = {} as IAxes;
+    this._gameState = EGameState.PLAYING;
+
     this.EGameState = EGameState;
+    this.EBoardWidth = EBoardWidth;
   }
 
   ngOnInit(): void {
@@ -73,9 +72,14 @@ export class GameBoardComponent implements OnInit {
   }
 
   private setGameLevel(): void {
-    this.squareWidthInPercent = 100/this.data.columns; //we don't care about rows because squares.
-    this.data.amountOfSquares = this.data.rows * this.data.columns;
-    this.data.isWideBoard = this.data.columns >= 20;
+    this.data = Object.assign(this.data, {
+      squareWidthInPercent: 100 / this.data.columns,
+      amountOfSquares: this.data.rows * this.data.columns,
+      boardWidth: this.data.columns >= 20 ? EBoardWidth.WIDE
+        : this.data.columns <= 10 ? EBoardWidth.THIN
+          : EBoardWidth.NORMAL
+    });
+
     this.rows = new Array(this.data.rows);
     this.createAxiesLabels();
 

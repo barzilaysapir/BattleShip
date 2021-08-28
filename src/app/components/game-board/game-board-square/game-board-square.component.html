@@ -6,7 +6,7 @@
 
     <ng-container *ngIf="gameState === EGameState.PLAYING && square.isFirstSquareOfShip && !square.isShipSunk">
         <img class="ship-img" [src]="square.shipSize | getIcon" alt="ship icon"
-            [style.transform]="(square.isVertical ? 'rotate(90deg) ' : ' ') + ' scale('+ square.shipSize +')'"
+            [style.transform]="(square.isVertical ? 'rotate(90deg) ' : '') + ' scale('+ square.shipSize +')'"
             [style.top]="square.isVertical ? (square.shipSize - 1) * 50 + '%' : 0"
             [ngClass]="{'vertical': square.isVertical, 'small' : square.shipSize === 2}">
     </ng-container>

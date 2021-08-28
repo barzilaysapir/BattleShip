@@ -7,11 +7,16 @@ $color-red: rgb(155, 30, 30);
 $font-primary: "Raleway", sans-serif;
 $font-display: "Spicy Rice", cursive;
 
+$phone-bp: 480px;
+$tablet-bp: 768px;
+$desktop-bp: 1260px;
+
 html {
   font-family: $font-primary;
 }
 
 body {
+  margin: 0;
   background-image: url(./assets/bg-image.jpg);
   background-size: cover;
   background-attachment: fixed;
@@ -28,7 +33,7 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 
-.side-bar {
+.side-bars .side-bar {
   position: fixed;
   top: 0;
   display: flex;
@@ -42,14 +47,14 @@ input[type="number"] {
   padding: 10px 5px;
   width: 130px;
 
-  @media screen and (min-width: 1200px) {
+  @media screen and (min-width: $desktop-bp) {
     height: 90vh;
   }
-  @media screen and (max-width: 1200px) {
+  @media screen and (max-width: $desktop-bp) {
     position: relative;
-    left: revert;
-    right: revert !important;
     margin-top: 50px;
-    top: revert;
+    &.progress-board {
+      right: revert;
+    }
   }
 }

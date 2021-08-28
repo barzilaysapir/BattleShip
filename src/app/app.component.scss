@@ -1,5 +1,11 @@
 @import "../styles.scss";
 
 .battleship {
-    padding: 10px 20px 0 20px;
+    @media screen and (min-width: $phone-bp) {
+        padding: 10px 20px 0 20px;
+    }
+
+    @media screen and (max-width: $phone-bp) {
+        padding: 10px;
+    }
 }

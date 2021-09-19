@@ -107,7 +107,7 @@ export class GameBoardComponent implements OnInit {
     this.boardSquaresArr = [];
 
     for (let i = 0; i < this.data.amountOfSquares; i++) {
-      this.boardSquaresArr.push({ isShip: false, isClicked: false, shipId: -1, shipSize: -1 });
+      this.boardSquaresArr.push({ squareId: i, isShip: false, isClicked: false, shipId: -1, shipSize: -1 });
     }
   }
 
@@ -153,8 +153,8 @@ export class GameBoardComponent implements OnInit {
       ) break;
 
       this.boardSquaresArr[ship.randomSquareI + j] = {
+        ... this.boardSquaresArr[ship.randomSquareI + j],
         isShip: true,
-        isClicked: false,
         shipId: ship.index,
         isFirstSquareOfShip: j === 0,
         shipSize: 1,

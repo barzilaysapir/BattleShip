@@ -25,6 +25,8 @@ export class GameBoardComponent implements OnInit {
   public EGameState: typeof EGameState;
   public EBoardWidth: typeof EBoardWidth;
 
+  public isRhambous: boolean = true;
+
   @Output() gameStateChanged: EventEmitter<EGameState> = new EventEmitter<EGameState>();
   @Output() shipsAmountListChanged: EventEmitter<IShipsAmountsList[]> = new EventEmitter<IShipsAmountsList[]>();
 
@@ -69,6 +71,7 @@ export class GameBoardComponent implements OnInit {
   ngOnInit(): void {
     this.setGameLevel();
     this.startNewGame();
+    this.toggleRhambous();
   }
 
   private setGameLevel(): void {
@@ -82,12 +85,14 @@ export class GameBoardComponent implements OnInit {
 
     this.rows = new Array(this.data.rows);
     this.createAxiesLabels();
+    this.calcRhambpus();
 
     if (this.largestShipImg < Math.max(this.data.rows, this.data.columns)) {
       this.shipSizesRange.max = this.largestShipImg;
     } else {
       this.shipSizesRange.max = Math.max(this.data.rows, this.data.columns);
     }
+
   }
 
   private createAxiesLabels(): void {
@@ -130,7 +135,7 @@ export class GameBoardComponent implements OnInit {
         randomSquareI: getRandomSquareIndex()
       }
 
-      while (this.boardSquaresArr[currentShip.randomSquareI].isShip) {
+      while (this.boardSquaresArr[currentShip.randomSquareI].isShip ) {
         currentShip.randomSquareI = getRandomSquareIndex();
       }
 
@@ -149,6 +154,7 @@ export class GameBoardComponent implements OnInit {
     ) {
       if (ship.randomSquareI + j >= this.data.amountOfSquares ||
         this.boardSquaresArr[ship.randomSquareI + j].isShip ||
+        // (this.isRhambous && !this.boardSquaresArr[ship.randomSquareI + j].isInBorders) ||
         (j !== 0 && (ship.randomSquareI + j) % (ship.isVertical ? this.data.rows : this.data.columns) === 0)
       ) break;
 
@@ -177,6 +183,31 @@ export class GameBoardComponent implements OnInit {
     this.createAllShips();
   }
 
+
+  private getMid(param: number): number[] {
+    let mid: number[] = [Math.floor(param / 2)];
+    if (param % 2 === 0)
+      mid.push(mid[0] - 1);
+    return mid;
+  }
+
+
+  public toggleRhambous(): void {
+    if (this.isRhambous) {
+      this.isRhambous = false;
+    } else {
+      this.isRhambous = true;
+      this.calcRhambpus();
+    }
+
+    this.setGameLevel();
+    this.startNewGame();
+  }
+
+  private calcRhambpus(): void {
+    this.data.verticalMid = this.getMid(this.data.rows);
+    this.data.horizontalMid = this.getMid(this.data.columns);
+  }
 
   public trackByFn(index: number): number {
     return index;

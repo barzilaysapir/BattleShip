@@ -1,4 +1,5 @@
 <div class="game-board">
+  <button class="rhambous" (click)="toggleRhambous()">Toggle Rhambous</button>
 
   <div class="state-msg" *ngIf="gameState !== EGameState.PLAYING" role="dialog" aria-labelledby="state-msg-img">
     <img id="state-msg-img" *ngIf="gameState === EGameState.WON" src="./assets/trophy.svg" alt="winner image">
@@ -21,7 +22,9 @@
               width: data.squareWidthInPercent + '%',
               paddingBottom: data.squareWidthInPercent + '%' 
             }">
-            <app-game-board-square [square]="square" [gameState]="gameState"
+            <app-game-board-square [square]="square" [gameState]="gameState" 
+            [rhambous]="{ isRhambous:isRhambous, rows: data.rows, columns: data.columns, rowI:rowI, 
+                squareI:squareI, verMid: data.verticalMid || [], horMid: data.horizontalMid || [] }"
               (squareClickedEmit)="squareClicked(squareI, $event)">
             </app-game-board-square>
           </td>

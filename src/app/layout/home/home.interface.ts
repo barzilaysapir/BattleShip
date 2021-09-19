@@ -9,6 +9,8 @@ export interface IGameLevelData extends IObjectKeys {
     amountOfShips: number,
     rows: number,
     columns: number,
+    verticalMid?: number[],
+    horizontalMid?: number[],
     amountOfSquares: number,
     boardWidth?: EBoardWidth,
     squareWidthInPercent?: number,

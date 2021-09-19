@@ -1,5 +1,5 @@
-<button (click)="!square.isClicked && squareClicked(square)" [disabled]="gameState !== EGameState.PLAYING"
-    class="square-btn"
+<button *ngIf="isInBorders" (click)="!square.isClicked && squareClicked(square)"
+    [disabled]="gameState !== EGameState.PLAYING" class="square-btn"
     [ngClass]="{'ship': square.isShip, 'clicked': square.isClicked, 'won': gameState === EGameState.WON}"
     [attr.aria-label]="square.isClicked ? (square.isShip ? 'ship clicked' : 'square clicked') : ''"
     [attr.aria-disabled]="square.isClicked">

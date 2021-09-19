@@ -6,6 +6,7 @@ export interface ISquareItem {
     isFirstSquareOfShip?: boolean,
     isShipSunk?: boolean,
     isVertical?: boolean,
+    isInBorders?: boolean,
 }
 
 export interface INewShipDetails {
@@ -28,4 +29,14 @@ export interface IShipsAmountsList {
 export interface IShipsSizesRange {
     min: number,
     max: number
+}
+
+export interface IRhambousDetails {
+    isRhambous: boolean,
+    rows: number,
+    columns: number,
+    rowI: number,
+    squareI: number
+    verMid: number[],
+    horMid: number[],
 }

@@ -32,20 +32,21 @@ export class HomeComponent implements OnInit {
       rows: 10,
       columns: 10,
       amountOfSquares: 100,
+      isRhambous: false
     }
 
     this.formInputs = [
       {
-        label: "Ships", 
+        label: "Ships",
         formControlName: "amountOfShips",
         isValidator: true
       },
       {
-        label: "Rows", 
+        label: "Rows",
         formControlName: "rows"
       },
       {
-        label: "Columns", 
+        label: "Columns",
         formControlName: "columns"
       },
     ]

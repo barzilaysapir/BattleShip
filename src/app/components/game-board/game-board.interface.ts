@@ -1,9 +1,10 @@
 export interface ISquareItem {
+    id: number,
     isShip: boolean,
     isClicked: boolean,
     shipId: number,
-    squareId: number,
     shipSize: number,
+    isInBorders: boolean,
     isFirstSquareOfShip?: boolean,
     isShipSunk?: boolean,
     isVertical?: boolean,

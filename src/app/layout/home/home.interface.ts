@@ -12,6 +12,13 @@ export interface IGameLevelData extends IObjectKeys {
     amountOfSquares: number,
     boardWidth?: EBoardWidth,
     squareWidthInPercent?: number,
+    isRhambous: boolean,
+    rhambous?: IRhambousData
+}
+
+interface IRhambousData {
+    verticalMid: number[],
+    horizontalMid: number[],
 }
 
 export interface IFormInput {

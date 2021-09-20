@@ -47,4 +47,9 @@ export class NewGameFormComponent implements OnInit {
       this.newGameEmit.emit(gameLevelFormGroup.value);
     }
   }
+
+  public toggleRhambous(gameLevelFormGroup: FormGroup): void {
+    this.defaultValues.isRhambous = !this.defaultValues.isRhambous;
+    this.newGameSubmitted(gameLevelFormGroup);
+  }
 }

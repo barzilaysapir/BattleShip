@@ -16,13 +16,13 @@
       <tr class="game-board-row" *ngFor="let row of rows; trackBy: trackByFn; index as rowI">
         <th class="game-board-axes">{{axesLabels.y[rowI]}}</th>
 
-        <ng-container *ngFor="let square of boardSquaresArr; index as squareI">
-          <td *ngIf="squareI | matrixPipe : rowI : data.columns" class="game-board-row-square" [style]="{ 
+        <ng-container *ngFor="let square of boardSquaresArr">
+          <td *ngIf="square.id | matrixPipe : rowI : data.columns" class="game-board-row-square" [style]="{ 
               width: data.squareWidthInPercent + '%',
               paddingBottom: data.squareWidthInPercent + '%' 
             }">
-            <app-game-board-square [square]="square" [gameState]="gameState"
-              (squareClickedEmit)="squareClicked(squareI, $event)">
+            <app-game-board-square *ngIf="square.isInBorders" [square]="square" [gameState]="gameState"
+              (squareClickedEmit)="squareClicked(square.id, $event)">
             </app-game-board-square>
           </td>
         </ng-container>

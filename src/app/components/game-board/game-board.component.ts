@@ -107,8 +107,70 @@ export class GameBoardComponent implements OnInit {
     this.boardSquaresArr = [];
 
     for (let i = 0; i < this.data.amountOfSquares; i++) {
-      this.boardSquaresArr.push({ squareId: i, isShip: false, isClicked: false, shipId: -1, shipSize: -1 });
+      this.boardSquaresArr.push({
+        id: i,
+        isShip: false,
+        isClicked: false,
+        shipId: -1,
+        shipSize: -1,
+        isInBorders: true
+      });
     }
+  }
+
+  private setBoardBorders(): void {
+    if (this.data.isRhambous) {
+      this.data.rhambous = {
+        verticalMid: this.getBoardMidPoints(this.data.rows),
+        horizontalMid: this.getBoardMidPoints(this.data.columns)
+      }
+
+      let currentRow: number = 0;
+      let currentColumn: number = 0;
+      let amountToShow: number = currentRow * 2 + 1;
+      let rowStart: number;
+      let rowEnd: number;
+      let passedVerticalMid: boolean = false;
+
+      this.boardSquaresArr.forEach(square => {
+        currentRow = Math.floor(square.id / this.data.columns);
+        currentColumn = square.id - currentRow * this.data.columns;
+
+        if (currentColumn === 0) {
+          if (passedVerticalMid) {
+            amountToShow = (this.data.rows - currentRow) * 2 - 1;
+            rowStart = Math.floor((this.data.columns - amountToShow) / 2);
+            rowEnd = Math.ceil((this.data.columns - amountToShow) / 2) + amountToShow;
+
+          } else if (this.data.rhambous?.verticalMid.some(midPoint => midPoint === currentRow)) {
+            rowStart = 0;
+            rowEnd = this.data.columns;
+            passedVerticalMid = true;
+            
+          } else {
+            amountToShow = currentRow * 2 + 1;
+            rowStart = Math.floor((this.data.columns - amountToShow) / 2);
+            rowEnd = Math.ceil((this.data.columns - amountToShow) / 2) + amountToShow;
+          }
+        }
+
+        if (rowStart <= currentColumn && rowEnd > currentColumn) {
+          square.isInBorders = true;
+        } else {
+          square.isInBorders = false;
+        }
+      });
+
+    } else {
+      this.boardSquaresArr.forEach(square => square.isInBorders = true);
+    }
+  }
+
+  private getBoardMidPoints(param: number): number[] {
+    let mid: number[] = [Math.floor(param / 2)];
+    if (param % 2 === 0)
+      mid.push(mid[0] - 1);
+    return mid;
   }
 
   private createShipsAmountsList(): void {
@@ -130,7 +192,8 @@ export class GameBoardComponent implements OnInit {
         randomSquareI: getRandomSquareIndex()
       }
 
-      while (this.boardSquaresArr[currentShip.randomSquareI].isShip) {
+      while (this.boardSquaresArr[currentShip.randomSquareI].isShip
+        || !this.boardSquaresArr[currentShip.randomSquareI].isInBorders) {
         currentShip.randomSquareI = getRandomSquareIndex();
       }
 
@@ -149,6 +212,7 @@ export class GameBoardComponent implements OnInit {
     ) {
       if (ship.randomSquareI + j >= this.data.amountOfSquares ||
         this.boardSquaresArr[ship.randomSquareI + j].isShip ||
+        !this.boardSquaresArr[ship.randomSquareI + j].isInBorders ||
         (j !== 0 && (ship.randomSquareI + j) % (ship.isVertical ? this.data.rows : this.data.columns) === 0)
       ) break;
 
@@ -173,6 +237,7 @@ export class GameBoardComponent implements OnInit {
   private startNewGame(): void {
     this.strikesCounter = 0;
     this.createBoardSquaresList();
+    this.setBoardBorders();
     this.createShipsAmountsList();
     this.createAllShips();
   }

@@ -1,4 +1,12 @@
 <form [formGroup]="gameLevelFormGroup" (submit)="newGameSubmitted(gameLevelFormGroup)" class="side-bar new-game-form">
+
+    <button class="toggle-btn" (click)="toggleRhambous(gameLevelFormGroup)">
+        <svg class="toggle-btn-icon" width="60" height="60"
+            [ngClass]="defaultValues.isRhambous ? 'square' : 'rhambous'">
+            <rect x="10" y="10" rx="5" ry="5" width="40" height="40" />
+        </svg>
+    </button>
+
     <p *ngIf="tooManyShips" class="new-game-form-error" role="alert">
         Too many ships for this board size. Clicking "new game" will generate the default board size.
     </p>
@@ -16,7 +24,4 @@
         New Game
     </button>
 
-    <button type="button" class="new-game-form-btn" (click)="toggleRhambous(gameLevelFormGroup)">
-        Toggle Rhambous
-    </button>
 </form>

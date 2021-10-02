@@ -35,7 +35,6 @@
         padding: 5px;
         color: lighten($color: $color-red, $amount: 10);
         border: 2px solid currentColor;
-
     }
 
     &-hint {
@@ -62,6 +61,31 @@
             color: whitesmoke;
             transform: scale(1.1);
             border: 2px solid whitesmoke;
+        }
+    }
+
+    .toggle-btn {
+        background-color: transparent;
+        border: none;
+        margin-bottom: 10px;
+
+        &-icon {
+            stroke-width: 2px;
+            stroke: whitesmoke;
+            fill: transparent;
+            cursor: pointer;
+            transition: all 0.3s;
+            &:hover {
+                stroke: transparent;
+                fill: whitesmoke;
+                transform: scale(1.2);
+            }
+            &.rhambous {
+                transform: rotate(45deg);
+                &:hover {
+                    transform: rotate(45deg) scale(1.2);
+                }
+            }
         }
     }
 }

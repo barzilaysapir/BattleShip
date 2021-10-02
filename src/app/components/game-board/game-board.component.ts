@@ -94,8 +94,16 @@ export class GameBoardComponent implements OnInit {
     this.axesLabels.x = [];
     this.axesLabels.y = [];
 
+    let counter = 0;
+    let temp = 0;
+
     for (let i = 1; i <= this.data.columns; i++) {
-      this.axesLabels.x.push((i + 9).toString(36).toUpperCase());
+      temp++;
+      if (i % 27 === 0) {
+        counter++;
+        temp = 1
+      }
+      this.axesLabels.x.push((temp + 9).toString(36).toUpperCase() + (counter > 0 ? counter : ''));
     }
 
     for (let i = 1; i <= this.data.rows; i++) {

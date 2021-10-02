@@ -125,36 +125,30 @@ export class GameBoardComponent implements OnInit {
         horizontalMid: this.getBoardMidPoints(this.data.columns)
       }
 
+      const isOdd: number = +(this.data.columns % 2 !== 0);
+      const ratio: number = this.data.columns / this.data.rows;
+
       let currentRow: number = 0;
       let currentColumn: number = 0;
-      let amountToShow: number = currentRow * 2 + 1;
-      let rowStart: number;
-      let rowEnd: number;
-      let passedVerticalMid: boolean = false;
+      let amountToShow: number;
+      let rowStartPoint: number;
+      let rowEndPoint: number;
 
       this.boardSquaresArr.forEach(square => {
         currentRow = Math.floor(square.id / this.data.columns);
         currentColumn = square.id - currentRow * this.data.columns;
 
         if (currentColumn === 0) {
-          if (passedVerticalMid) {
-            amountToShow = (this.data.rows - currentRow) * 2 - 1;
-            rowStart = Math.floor((this.data.columns - amountToShow) / 2);
-            rowEnd = Math.ceil((this.data.columns - amountToShow) / 2) + amountToShow;
-
-          } else if (this.data.rhambous?.verticalMid.some(midPoint => midPoint === currentRow)) {
-            rowStart = 0;
-            rowEnd = this.data.columns;
-            passedVerticalMid = true;
-            
-          } else {
-            amountToShow = currentRow * 2 + 1;
-            rowStart = Math.floor((this.data.columns - amountToShow) / 2);
-            rowEnd = Math.ceil((this.data.columns - amountToShow) / 2) + amountToShow;
+          let tempCurrentRow = currentRow;
+          if (this.data.rhambous?.verticalMid.every(midPoint => midPoint <= currentRow)) {
+            tempCurrentRow = this.data.rows - (currentRow + 1);
           }
+          amountToShow = Math.round(ratio * (tempCurrentRow + 1)) * 2 - isOdd;
+          rowStartPoint = (this.data.columns - amountToShow) / 2;
+          rowEndPoint = rowStartPoint + amountToShow;
         }
 
-        if (rowStart <= currentColumn && rowEnd > currentColumn) {
+        if (rowStartPoint <= currentColumn && rowEndPoint > currentColumn) {
           square.isInBorders = true;
         } else {
           square.isInBorders = false;
